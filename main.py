@@ -144,7 +144,7 @@ class Piece(object):
         self.y = y
         self.shape = shape
         self.color = shape_colors[shapes.index(shape)]
-        self.rotations = 0
+        self.rotation = 0
  
 def create_grid(locked_positions={}):
     grid = [[(0, 0, 0) for x in range(10)] for x in range(20)]
@@ -158,10 +158,20 @@ def create_grid(locked_positions={}):
     return grid
  
 def convert_shape_format(shape):
-    pass
+    positions = []
+    format = shape.shape[shape.rotation % len(shape.shape)]
+
+    for i, line in enumerate(format):
+        row = list(line)
+        for j, column in enumerate(row):
+            if column == '0':
+                positions.append((shape.x + j, shape.y + i))
+        
+    for i, pos in enumerate(positions):
+        positions[i] = (pos[0] - 2, pos[1] - 4)
  
 def valid_space(shape, grid):
-    pass
+    
  
 def check_lost(positions):
     pass
@@ -181,7 +191,6 @@ def draw_grid(surface, grid, row, col):
         for j in range(len(grid[i])):
             pygame.draw.line(surface, (128, 128, 128), (sx + j*block_size, sy), (sx+ j*block_size, sy+ play_height))
 
-    
  
 def clear_rows(grid, locked):
     pass
