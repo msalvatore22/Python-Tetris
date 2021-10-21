@@ -173,16 +173,15 @@ def convert_shape_format(shape):
     return positions
  
 def valid_space(shape, grid):
-    accepted_pos = [[(j, i) for j in range(10) if grid[i][j] == (0,0,0)] for i in range(20)] 
-    accepted_pos = [j for sub in accepted_pos for j in sub]
-
+    accepted_positions = [[(j, i) for j in range(10) if grid[i][j] == (0,0,0)] for i in range(20)]
+    accepted_positions = [j for sub in accepted_positions for j in sub]
     formatted = convert_shape_format(shape)
-
+ 
     for pos in formatted:
-        if pos not in accepted_pos:
+        if pos not in accepted_positions:
             if pos[1] > -1:
                 return False
-    
+ 
     return True
 
  
@@ -327,7 +326,7 @@ def main(win):
                     current_piece.x +=1
                     if not(valid_space(current_piece, grid)):
                         current_piece.x -= 1
-                if event.key == pygame.K_DOWN:
+                if event.key == pygame.K_DOWN and current_piece.y < 20:
                     current_piece.y += 1
                     if not(valid_space(current_piece, grid)):
                         current_piece.y += 1
