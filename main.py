@@ -265,7 +265,7 @@ def draw_window(surface, grid, score=0):
     surface.blit(label, (top_left_x + play_width / 2 - (label.get_width() / 2), 30))
 
     font = pygame.font.SysFont('comicsans', 30)
-    label = font.render('Score', 1, (255,255,255))
+    label = font.render('Score: ' + str(score), 1, (255,255,255))
 
     sx = top_left_x + play_width + 50
     sy = top_left_y + play_height/2 - 100
@@ -363,11 +363,21 @@ def main(win):
             pygame.display.update()
             pygame.time.delay(1500)
             run = False
-    
-    pygame.display.quit()
 
 def main_menu(win):
-    main(win)
+    run = True
+    while run:
+        win.fill((0,0,0))
+        draw_text_middle("Press any key to play", 60, (255,255,255), win)
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+ 
+            if event.type == pygame.KEYDOWN:
+                main(win)
+    pygame.quit()
+ 
 
 win = pygame.display.set_mode((s_width, s_height))
 pygame.display.set_caption('Tetris')
